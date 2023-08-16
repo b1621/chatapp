@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../model/userModel");
+const generateToken = require("../utils/generateToken");
 
 exports.getAllUser = asyncHandler(async (req, res) => {
   const users = await User.find({});
@@ -21,7 +22,7 @@ exports.registerUser = asyncHandler(async (req, res) => {
     password,
   });
   if (user) {
-    console.log("user created");
+    generateToken(res, user._id);
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -41,7 +42,11 @@ exports.authUser = (req, res) => {
 };
 
 exports.logoutUser = (req, res) => {
-  res.send("logout user");
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+  res.status(200).json({ message: "user logged out" });
 };
 exports.updateUserProfile = (req, res) => {
   res.send("update user profile");
