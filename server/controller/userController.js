@@ -8,7 +8,13 @@ exports.getAllUser = asyncHandler(async (req, res) => {
 });
 
 exports.registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, confirmPassword } = req.body;
+
+  if (password !== confirmPassword) {
+    res.status(400);
+    throw new Error("Passwords do not match");
+  }
+
   const userExists = await User.findOne({ email });
 
   if (userExists) {
