@@ -3,7 +3,7 @@ import axios from "axios";
 
 const AuthContext = createContext();
 
-const BASE_URL = "http://127.0.0.1:8000/api/v1/user";
+const BASE_URL = "/api/v1/user";
 
 const initialState = {
   user: null,
@@ -16,6 +16,7 @@ function AuthProvider({ children }) {
     initialState.isAuthenticated,
   );
   const registerUser = async (userData) => {
+    console.log("userData ", userData);
     try {
       const response = await axios.post(`${BASE_URL}/register`, userData);
       setUser(response.data.user);
@@ -26,12 +27,20 @@ function AuthProvider({ children }) {
     }
   };
   const authUser = async (userData) => {
+    console.log("userData ", userData);
     try {
-      const response = await axios.post(`${BASE_URL}/login`, userData);
-      setUser(response.data.user);
-      setIsAuthenticated(true);
+      const response = await axios.post(`/api/v1/user/auth`, userData);
+
+      if (response.status === 200) {
+        console.log("authentication sucess", response.data);
+        setUser(response.data.user);
+        setIsAuthenticated(true);
+      } else {
+        // Authentication failed, handle error
+        console.log("Authentication failed");
+      }
     } catch (error) {
-      console.error("Registration error:", error);
+      console.error("Authentication error:", error);
       throw error;
     }
   };

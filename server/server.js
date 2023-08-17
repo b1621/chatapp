@@ -10,8 +10,9 @@ connectDB();
 
 const port = process.env.PORT || 3033;
 const app = express();
+const cors = require("cors");
 
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = ["http://localhost:3000"];
 
 app.use(
   cors({

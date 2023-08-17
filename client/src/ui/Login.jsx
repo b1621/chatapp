@@ -1,53 +1,60 @@
 import { useState } from "react";
-import { useAuth } from "../features/user/AuthContext";
 
 const Login = () => {
-  const { authUser } = useAuth();
+  const [email, setemail] = useState("");
+  const [password, setPassword] = useState("");
 
-  // Initialize state for form inputs
-  const [formData, setFormData] = useState({
-    name: "",
-    password: "",
-  });
-
-  // Update form input values
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-  const handleSubmit = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    // Make API request to authenticate user
+    try {
+      const response = await fetch("/api/v1/user/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    // Access form input values from formData
-    const { name, password } = formData;
+      // User is authenticated, perform necessary actions
+      const data = await response.json();
+      console.log(data); // Do something with the response data
+    } catch (error) {
+      console.log(error);
+      if (error.message) {
+        console.log(error.message);
+      }
+      if (error.response && error.response.status === 400) {
+        const errorMessage = error.response.data.message;
 
-    // Now you can use 'name' and 'password' in your authentication logic
-    console.log("Name:", name);
-    console.log("Password:", password);
-
-    // Call your authentication function with the form values
-    authUser(name, password);
+        console.log("error message = ", errorMessage);
+      }
+      console.log(error);
+    }
   };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          className="border"
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-        />
-        <input
-          className="border"
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleInputChange}
-        />
+    <div className="border">
+      <h2 className="text-center">Login</h2>
+      <form onSubmit={handleLogin}>
+        <div>
+          <label htmlFor="email">email</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setemail(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
         <button type="submit">Login</button>
       </form>
     </div>
