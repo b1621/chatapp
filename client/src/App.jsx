@@ -15,28 +15,30 @@ const App = () => {
   axios.defaults.baseURL = "/api/v1/user";
   axios.defaults.withCredentials = true;
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <ToastContainer />
-        {/* <Header /> */}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
-          <Route
-            path="app"
-            element={
-              <ProtectedRoute>
-                <AppLayout />
-              </ProtectedRoute>
-            }
-          >
-            {/* <Route index element={<Navigate replace to="chat" />} /> */}
-            <Route path="chat" element={<Chat />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <div className="min-h-screen bg-slate-900 text-white">
+      <AuthProvider>
+        <BrowserRouter>
+          <ToastContainer />
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="register" element={<Register />} />
+            <Route path="login" element={<Login />} />
+            <Route
+              path="app"
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              {/* <Route index element={<Navigate replace to="chat" />} /> */}
+              <Route path="chat" element={<Chat />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </div>
   );
 };
 

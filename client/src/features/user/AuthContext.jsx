@@ -5,7 +5,7 @@ const AuthContext = createContext();
 
 const initialState = {
   user: null,
-  isAuthenticated: true,
+  isAuthenticated: false,
   status: "",
   error: "",
 };
@@ -34,7 +34,7 @@ function AuthProvider({ children }) {
     });
   };
 
-  const contextValue = { user, isAuthenticated, getUsers };
+  const contextValue = { user, isAuthenticated, getUsers, dispatch };
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );

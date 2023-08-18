@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../features/user/AuthContext";
 // import { useAuth } from "../features/user/AuthContext";
 
 const Register = () => {
@@ -8,6 +10,9 @@ const Register = () => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const { dispatch } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +23,12 @@ const Register = () => {
         password,
         confirmPassword,
       });
-      toast.success("Login Success");
+
+      dispatch({ type: "user/register", payload: response.data });
+
+      toast.success("Registration Success");
       console.log("login successful", response.data);
+      navigate("/app/chat");
       // User is authenticated, perform necessary actions
     } catch (error) {
       if (error.response) {
