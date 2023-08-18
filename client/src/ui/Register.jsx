@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-toastify";
 // import { useAuth } from "../features/user/AuthContext";
 
 const Register = () => {
@@ -9,27 +11,29 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch("/api/v1/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password, confirmPassword }),
+      const response = await axios.post("/register", {
+        name,
+        email,
+        password,
+        confirmPassword,
       });
-
-      if (response.ok) {
-        // User is authenticated, perform necessary actions
-        const data = await response.json();
-        console.log(data); // Do something with the response data
-      } else {
-        // Authentication failed, handle error
-        console.log("response .. ", response);
-        console.log("Authentication failed");
-      }
+      toast.success("Login Success");
+      console.log("login successful", response.data);
+      // User is authenticated, perform necessary actions
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        // The request was made and the server responded with an error status code
+
+        toast.error(error.response.data.message);
+        console.error("Login error:", error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("No response received:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an error
+        console.error("Request error:", error.message);
+      }
     }
   };
   return (

@@ -1,35 +1,32 @@
+import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Make API request to authenticate user
     try {
-      const response = await fetch("/api/v1/user/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
+      const response = await axios.post("/auth", { email, password });
+      toast.success("Login Success");
+      console.log("login successful", response.data);
       // User is authenticated, perform necessary actions
-      const data = await response.json();
-      console.log(data); // Do something with the response data
     } catch (error) {
-      console.log(error);
-      if (error.message) {
-        console.log(error.message);
+      if (error.response) {
+        // The request was made and the server responded with an error status code
+        setError(error.response.data.message);
+        toast.error(error.response.data.message);
+        console.error("Login error:", error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("No response received:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an error
+        console.error("Request error:", error.message);
       }
-      if (error.response && error.response.status === 400) {
-        const errorMessage = error.response.data.message;
-
-        console.log("error message = ", errorMessage);
-      }
-      console.log(error);
     }
   };
 
@@ -37,6 +34,7 @@ const Login = () => {
     <div className="border">
       <h2 className="text-center">Login</h2>
       <form onSubmit={handleLogin}>
+        {error && <p className=" text-red-400">{error}</p>}
         <div>
           <label htmlFor="email">email</label>
           <input

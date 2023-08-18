@@ -1,51 +1,40 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
 
-const BASE_URL = "/api/v1/user";
-
 const initialState = {
   user: null,
-  isAuthenticated: false,
+  isAuthenticated: true,
+  status: "",
+  error: "",
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "user/register":
+      return { ...state, user: action.payload, isAuthenticated: true };
+    case "user/login":
+      return { ...state, user: action.payload, isAuthenticated: true };
+    case "user/logout":
+      return { ...state, user: null, isAuthenticated: false };
+    default:
+      break;
+  }
 };
 
 function AuthProvider({ children }) {
-  const [user, setUser] = useState(initialState.user);
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    initialState.isAuthenticated,
-  );
-  const registerUser = async (userData) => {
-    console.log("userData ", userData);
-    try {
-      const response = await axios.post(`${BASE_URL}/register`, userData);
-      setUser(response.data.user);
-      setIsAuthenticated(true);
-    } catch (error) {
-      console.error("Registration error:", error);
-      throw error;
-    }
-  };
-  const authUser = async (userData) => {
-    console.log("userData ", userData);
-    try {
-      const response = await axios.post(`/api/v1/user/auth`, userData);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-      if (response.status === 200) {
-        console.log("authentication sucess", response.data);
-        setUser(response.data.user);
-        setIsAuthenticated(true);
-      } else {
-        // Authentication failed, handle error
-        console.log("Authentication failed");
-      }
-    } catch (error) {
-      console.error("Authentication error:", error);
-      throw error;
-    }
+  const { user, isAuthenticated, status, error } = state;
+
+  const getUsers = async () => {
+    axios.get("/").then((response) => {
+      return response.data;
+    });
   };
 
-  const contextValue = { user, isAuthenticated, registerUser, authUser };
+  const contextValue = { user, isAuthenticated, getUsers };
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
