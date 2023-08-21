@@ -15,11 +15,12 @@ const App = () => {
   axios.defaults.baseURL = "/api/v1/user";
   axios.defaults.withCredentials = true;
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
+    <div className=" h-screen bg-slate-900 text-white">
       <AuthProvider>
         <BrowserRouter>
           <ToastContainer />
-          <Header />
+          {/* <Header /> */}
+          <div className="hidden py-2"></div>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="register" element={<Register />} />
@@ -35,6 +36,7 @@ const App = () => {
               {/* <Route index element={<Navigate replace to="chat" />} /> */}
               <Route path="chat" element={<Chat />} />
             </Route>
+            <Route path="*" element={"404 not found"} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

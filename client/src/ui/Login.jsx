@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "../features/user/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setemail] = useState("");
@@ -40,21 +40,21 @@ const Login = () => {
   };
 
   return (
-    <div className=" mx-auto my-16 flex w-[75%] border border-slate-800 bg-slate-900 shadow shadow-xl">
-      <div className="w-full">
-        <img className=" m-16" src="/login.svg" alt="" />
+    <div className=" mx-auto my-16 flex w-[75%] rounded-2xl border border-slate-800 bg-slate-900/70">
+      <div className="hidden w-full md:block">
+        <img className=" m-16 h-96" src="/login.svg" alt="" />
       </div>
-      <div className="w-full border pt-10">
-        <h2 className="my-3 text-center text-3xl">Login</h2>
-        <form onSubmit={handleLogin} className=" mx-10 space-y-5 px-12">
+      <div className="w-full pt-16">
+        <h2 className="my-3 text-center text-4xl font-semibold">Login</h2>
+        <form onSubmit={handleLogin} className="my-5 space-y-5 px-12 md:mx-10">
           {error && <p className=" text-red-400">{error}</p>}
           {/* <div className="mx-5 flex items-center space-x-2"> */}
           <div className=" space-y-2">
-            <label className=" pl-2" htmlFor="email">
+            <label className=" pl-2 text-sm" htmlFor="email">
               email
             </label>
             <input
-              className="bg w-full rounded-full border border-slate-900 bg-slate-800 px-4 py-3 text-sm text-black outline-none focus:border-sky-600"
+              className="bg w-full rounded-full border border-slate-900 bg-slate-800 px-4 py-3 text-sm text-slate-200  outline-none focus:border-sky-600"
               type="email"
               id="email"
               value={email}
@@ -62,17 +62,23 @@ const Login = () => {
             />
           </div>
           <div>
-            <label className=" pl-2" htmlFor="password">
+            <label className=" pl-2 text-sm" htmlFor="password">
               Password
             </label>
             <input
-              className="bg w-full rounded-full border border-slate-900 bg-slate-800 px-4 py-3 text-sm text-black outline-none focus:border-sky-600"
+              className="bg w-full rounded-full border border-slate-900 bg-slate-800 px-4 py-3 text-sm text-slate-200  outline-none focus:border-sky-600"
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <p className=" pl-2 text-xs">
+            Do Not Have an account?
+            <span className=" text-sky-500 hover:text-sky-600">
+              <Link to="/register"> Register</Link>
+            </span>
+          </p>
           <div className="w-full">
             <button
               className=" mx-10 w-fit rounded-full bg-sky-600 px-6 py-2"

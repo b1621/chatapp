@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <div>
-      {/* <Header /> */}
+      <Header />
       <h2 className="my-10 text-center text-2xl">home page</h2>
     </div>
   );

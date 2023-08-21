@@ -10,7 +10,7 @@ const Header = () => {
     dispatch({ type: "user/logout" });
   };
   return (
-    <div className=" flex items-center justify-between border py-2">
+    <div className="  flex items-center justify-between  py-2">
       <Link to="/">Logo</Link>
       {isAuthenticated ? (
         <ul className="mr-4 space-x-4">
