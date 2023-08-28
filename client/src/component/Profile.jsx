@@ -1,9 +1,14 @@
 import { useAuth } from "../features/user/AuthContext";
 
 const Profile = ({ setShowProfile }) => {
-  const { user } = useAuth();
+  const { user, dispatch } = useAuth();
+
   const { email, name, pic } = user;
-  console.log(email, name, pic);
+  //   console.log(email, name, pic);
+  const logout = () => {
+    dispatch({ type: "user/logout" });
+  };
+
   return (
     <div className="absolute flex h-screen w-screen  justify-center backdrop-blur-sm backdrop-brightness-100">
       <div className=" relative mt-36 w-96  border">
@@ -20,7 +25,7 @@ const Profile = ({ setShowProfile }) => {
           <p>{email}</p>
         </div>
         <div>
-          <button>Logout</button>
+          <button onClick={logout}>Logout</button>
         </div>
       </div>
     </div>
