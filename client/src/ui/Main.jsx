@@ -2,11 +2,11 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../features/user/AuthContext";
 
-const Main = () => {
+const Main = ({ setShowProfile }) => {
   const { user, dispatch } = useAuth();
   const userName = user.name;
   const nameInit = userName.charAt(0).toUpperCase();
-  console.log(nameInit);
+  // console.log(nameInit);
   return (
     <div className="w-full bg-slate-800">
       <header className="flex justify-between bg-slate-900/40 py-2">
@@ -18,7 +18,10 @@ const Main = () => {
             alt="notification"
           />
 
-          <p className="rounded-full border px-3 py-1 text-xl hover:cursor-pointer">
+          <p
+            className="rounded-full border px-3 py-1 text-xl hover:cursor-pointer"
+            onClick={() => setShowProfile(true)}
+          >
             {nameInit}
           </p>
         </div>

@@ -20,7 +20,7 @@ const App = () => {
         <BrowserRouter>
           <ToastContainer />
           {/* <Header /> */}
-          <div className=" py-2"></div>
+          <div className=" py-0"></div>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="register" element={<Register />} />

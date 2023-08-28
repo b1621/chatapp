@@ -9,7 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { dispatch, user, isAuthenticated } = useAuth();
+  const { dispatch, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
