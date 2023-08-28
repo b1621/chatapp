@@ -10,8 +10,8 @@ const Profile = ({ setShowProfile }) => {
   };
 
   return (
-    <div className="absolute flex h-screen w-screen  justify-center backdrop-blur-sm backdrop-brightness-100">
-      <div className=" relative mt-36 w-96  border">
+    <div className="absolute flex h-screen w-screen  justify-center  backdrop-blur-sm backdrop-brightness-100">
+      <div className=" relative mt-36 h-fit w-96 bg-slate-700">
         <button
           className="absolute right-3 text-3xl hover:text-slate-300"
           onClick={() => setShowProfile(false)}
