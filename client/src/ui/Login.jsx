@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "../features/user/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,14 +9,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { dispatch } = useAuth();
+  const { dispatch, user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post("/auth", { email, password });
-      toast.success("Login Success");
+      toast.success("Login Successful");
       console.log("login successful", response.data);
 
       dispatch({ type: "user/login", payload: response.data });
@@ -39,6 +39,11 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    // console.log("isAuthenticated ", isAuthenticated);
+    if (isAuthenticated) navigate("/app/chat");
+  }, [navigate, isAuthenticated]);
+
   return (
     <div className=" mx-auto my-16 flex w-[75%] rounded-2xl border border-slate-800 bg-slate-900/70">
       <div className="hidden w-full md:block">
@@ -47,8 +52,8 @@ const Login = () => {
       <div className="w-full pt-16">
         <h2 className="my-3 text-center text-4xl font-semibold">Login</h2>
         <form onSubmit={handleLogin} className="my-5 space-y-5 px-12 md:mx-10">
-          {error && <p className=" text-red-400">{error}</p>}
-          {/* <div className="mx-5 flex items-center space-x-2"> */}
+          {/* {error && <p className=" text-red-400">{error}</p>} */}
+
           <div className=" space-y-2">
             <label className=" pl-2 text-sm" htmlFor="email">
               email

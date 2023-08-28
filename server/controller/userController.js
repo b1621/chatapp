@@ -8,11 +8,11 @@ exports.getAllUser = asyncHandler(async (req, res) => {
 });
 
 exports.registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, confirmPassword } = req.body;
+  const { name, email, password, pic } = req.body;
 
-  if (password !== confirmPassword) {
+  if (!name || !email || !password) {
     res.status(400);
-    throw new Error("Passwords do not match");
+    throw new Error("Please Enter all the Feilds");
   }
 
   const userExists = await User.findOne({ email });
@@ -26,13 +26,16 @@ exports.registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    pic,
   });
+
   if (user) {
     generateToken(res, user._id);
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
+      pic: user.pic,
     });
   } else {
     res.status(400);
@@ -45,6 +48,7 @@ exports.getUserProfile = (req, res) => {
     _id: req.user._id,
     name: req.user.name,
     email: req.user.email,
+    pic: req.user.pic,
   };
   res.status(200).json(user);
 };
@@ -53,18 +57,33 @@ exports.authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
+
   if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id);
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
+      pic: user.pic,
     });
   } else {
     res.status(400);
 
     throw new Error("invalid Email or Password !!");
   }
+});
+
+exports.allUsers = asyncHandler(async (req, res) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+  const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+  res.send(users);
 });
 
 exports.logoutUser = asyncHandler(async (req, res) => {

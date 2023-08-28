@@ -20,13 +20,13 @@ const App = () => {
         <BrowserRouter>
           <ToastContainer />
           {/* <Header /> */}
-          <div className="hidden py-2"></div>
+          <div className=" py-2"></div>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route
-              path="app"
+              path="/app"
               element={
                 <ProtectedRoute>
                   <AppLayout />

@@ -4,8 +4,10 @@ import axios from "axios";
 const AuthContext = createContext();
 
 const initialState = {
-  user: null,
-  isAuthenticated: false,
+  user: localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo"))
+    : null,
+  isAuthenticated: localStorage.getItem("userInfo") ? true : false,
   status: "",
   error: "",
 };
@@ -13,13 +15,16 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "user/register":
+      localStorage.setItem("userInfo", JSON.stringify(action.payload));
       return { ...state, user: action.payload, isAuthenticated: true };
     case "user/login":
+      localStorage.setItem("userInfo", JSON.stringify(action.payload));
       return { ...state, user: action.payload, isAuthenticated: true };
     case "user/logout":
+      localStorage.removeItem("userInfo");
       return { ...state, user: null, isAuthenticated: false };
     default:
-      break;
+      return state;
   }
 };
 
@@ -29,7 +34,7 @@ function AuthProvider({ children }) {
   const { user, isAuthenticated, status, error } = state;
 
   const getUsers = async () => {
-    axios.get("/").then((response) => {
+    axios.get("/getusers").then((response) => {
       return response.data;
     });
   };

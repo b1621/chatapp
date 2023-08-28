@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../features/user/AuthContext";
@@ -11,7 +11,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const { dispatch } = useAuth();
+  const { dispatch, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -45,6 +45,11 @@ const Register = () => {
       }
     }
   };
+
+  useEffect(() => {
+    // console.log("isAuthenticated ", isAuthenticated);
+    if (isAuthenticated) navigate("/app/chat");
+  }, [navigate, isAuthenticated]);
   return (
     <div className=" mx-auto my-16 flex w-[75%] rounded-2xl border border-slate-800 bg-slate-900/70">
       <div className="w-full py-10">
