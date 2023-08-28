@@ -1,9 +1,8 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../features/user/AuthContext";
 
 const Main = ({ setShowProfile }) => {
-  const { user, dispatch } = useAuth();
+  const { user } = useAuth();
   const userName = user.name;
   const nameInit = userName.charAt(0).toUpperCase();
   // console.log(nameInit);

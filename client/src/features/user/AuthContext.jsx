@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useState } from "react";
+import { createContext, useContext, useReducer } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -39,7 +39,14 @@ function AuthProvider({ children }) {
     });
   };
 
-  const contextValue = { user, isAuthenticated, getUsers, dispatch };
+  const contextValue = {
+    user,
+    isAuthenticated,
+    getUsers,
+    dispatch,
+    status,
+    error,
+  };
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );

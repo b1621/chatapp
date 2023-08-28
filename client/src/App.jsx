@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from "./ui/Register";
 import Login from "./ui/Login";
 import { AuthProvider } from "./features/user/AuthContext";
@@ -6,7 +6,7 @@ import Home from "./ui/Home";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "./ui/Header";
+// import Header from "./ui/Header";
 import ProtectedRoute from "./component/ProtectedRoute";
 import AppLayout from "./ui/AppLayout";
 import Chat from "./features/chat/Chat";

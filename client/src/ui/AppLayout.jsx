@@ -1,7 +1,8 @@
 import SideBar from "./SideBar";
 import Main from "./Main";
-import { useAuth } from "../features/user/AuthContext";
+// import { useAuth } from "../features/user/AuthContext";
 import { useState } from "react";
+import Profile from "../component/Profile";
 
 const AppLayout = () => {
   // const { isAuthenticated } = useAuth();
@@ -13,14 +14,7 @@ const AppLayout = () => {
       <div className="relative flex h-screen">
         <SideBar />
         <Main setShowProfile={setShowProfile} />
-        {showProfile && (
-          <div className="absolute flex h-screen w-screen  justify-center">
-            <div className=" mt-36 w-96  border">
-              <button onClick={() => setShowProfile(false)}>&times;</button>
-              profile
-            </div>
-          </div>
-        )}
+        {showProfile && <Profile setShowProfile={setShowProfile} />}
       </div>
     </div>
   );
