@@ -25,7 +25,12 @@ const Profile = ({ setShowProfile }) => {
           <p>{email}</p>
         </div>
         <div>
-          <button onClick={logout}>Logout</button>
+          <button
+            className="m-4 border bg-slate-500 px-4 py-1 hover:bg-slate-600"
+            onClick={logout}
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>

@@ -74,6 +74,8 @@ exports.authUser = asyncHandler(async (req, res) => {
 });
 
 exports.allUsers = asyncHandler(async (req, res) => {
+  // console.log(req);
+  // console.log("user data === ", req.user);
   const keyword = req.query.search
     ? {
         $or: [

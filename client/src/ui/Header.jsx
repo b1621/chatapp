@@ -11,7 +11,7 @@ const Header = () => {
   };
   return (
     <div className=" flex items-center justify-between  py-2">
-      <Link to="/">Logo</Link>
+      <Link to="/app/chat">Logo</Link>
       {isAuthenticated ? (
         <ul className="mr-4 space-x-4">
           <Link>Profile</Link>

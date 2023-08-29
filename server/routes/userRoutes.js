@@ -14,7 +14,7 @@ const {
 
 router.get("/getusers", getAllUser);
 
-router.get("/", allUsers);
+router.get("/", protect, allUsers);
 router.post("/register", registerUser);
 router.post("/auth", authUser);
 router.post("/logout", logoutUser);
