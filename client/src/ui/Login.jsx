@@ -15,7 +15,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/auth", { email, password });
+      const response = await axios.post("user/auth", { email, password });
       toast.success("Login Successful");
       console.log("login successful", response.data);
 

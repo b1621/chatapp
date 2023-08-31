@@ -1,48 +1,32 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
 
-const userSchema = mongoose.Schema(
+const chatModel = mongoose.Schema(
   {
-    name: {
-      type: "String",
-      required: true,
+    chatName: {
+      type: String,
+      trim: true,
     },
-    email: {
-      type: "String",
-      unique: true,
-      required: true,
-    },
-    password: {
-      type: "String",
-      required: true,
-    },
-    pic: {
-      type: "String",
-      default:
-        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
-    },
-    isAdmin: {
+    isGroupChat: {
       type: Boolean,
-      required: true,
       default: false,
     },
+    users: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    latestMessage: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Message",
+    },
+    groupAdmin: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
-  { timestaps: true }
+  { timestamps: true }
 );
+const Chat = mongoose.model("Chat", chatModel);
 
-userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
-
-userSchema.pre("save", async function (next) {
-  if (!this.isModified) {
-    next();
-  }
-
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
-
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+module.exports = Chat;

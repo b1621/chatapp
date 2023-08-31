@@ -1,20 +1,25 @@
 import axios from "axios";
 import { useState } from "react";
+import { useChat } from "../features/chat/ChatContext";
+import ChatList from "../features/chat/ChatsList";
 
 const SideBar = () => {
   const [search, setSearch] = useState("");
-  const [chats, setChats] = useState([]);
+  // const [chats, setChats] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [showSearchResult, setShowSearchResult] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
 
+  const { chats, setChats, setSelectedChat, selectedChat } = useChat();
+
   const handleSearch = async () => {
     if (!search) return;
+
     try {
       setShowSearchResult(true);
       setLoading(true);
-      const response = await axios.get(`?search=${search}`);
+      const response = await axios.get(`user?search=${search}`);
       setSearchResult(response.data);
       setLoading(false);
     } catch (error) {
@@ -26,6 +31,13 @@ const SideBar = () => {
     try {
       setShowSearchResult(false);
       setLoadingChat(true);
+
+      const { data } = await axios.post(`chat`, { userId });
+      console.log(chats);
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      console.log(data);
+
+      setLoadingChat(false);
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +64,10 @@ const SideBar = () => {
           <div className="">
             <button
               className="absolute right-3 top-0 text-xl"
-              onClick={() => setShowSearchResult(false)}
+              onClick={() => {
+                setShowSearchResult(false);
+                setSearch("");
+              }}
             >
               &times;
             </button>
@@ -83,18 +98,13 @@ const SideBar = () => {
                     </div>
                   </div>
                 ))}
-                {/* {searchResult.map((data) => {
-                  <div key={data._id}>
-                    <img src={data.pic} alt="" />
-                  </div>;
-                })} */}
               </div>
             </div>
           )}
         </div>
       ) : (
         <div>
-          <h2 className="my-1  text-center text-lg">chats list</h2>
+          <ChatList />
         </div>
       )}
     </div>

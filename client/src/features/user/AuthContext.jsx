@@ -34,7 +34,7 @@ function AuthProvider({ children }) {
   const { user, isAuthenticated, status, error } = state;
 
   const getUsers = async () => {
-    axios.get("/getusers").then((response) => {
+    axios.get("user/getusers").then((response) => {
       return response.data;
     });
   };

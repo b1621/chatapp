@@ -14,7 +14,7 @@ const cors = require("cors");
 
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
-const messageRoutes = require("./routes/messageRoutes.js");
+// const messageRoutes = require("./routes/messageRoutes.js");
 
 const allowedOrigins = ["http://localhost:3000"];
 
@@ -37,8 +37,8 @@ app.use(cookieParser());
 
 // app.get("/", () => console.log("hello world"));
 app.use("/api/v1/user", userRoutes);
-// app.use("/api/v1/chat", chatRoutes);
-app.use("/api/v1/message", messageRoutes);
+app.use("/api/v1/chat", chatRoutes);
+// app.use("/api/v1/message", messageRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
