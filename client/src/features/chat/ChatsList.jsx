@@ -4,7 +4,7 @@ import { useAuth } from "../user/AuthContext";
 import { useChat } from "./ChatContext";
 import { useEffect } from "react";
 
-const ChatList = () => {
+const ChatList = ({ setShowAddGroup }) => {
   const { chats, setChats, selectedChat, setSelectedChat } = useChat();
   const { user } = useAuth();
 
@@ -26,7 +26,12 @@ const ChatList = () => {
     <div>
       <h2 className="my-1  text-center text-lg">chats list</h2>
       <div className="flex justify-end">
-        <button className=" my-2 mr-2 border px-4 py-1">+ Group</button>
+        <button
+          onClick={() => setShowAddGroup(true)}
+          className=" my-2 mr-2 border px-4 py-1"
+        >
+          + Group
+        </button>
       </div>
       {chats ? (
         <div className="mx-1 space-y-2">

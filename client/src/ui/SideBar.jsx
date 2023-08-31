@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useChat } from "../features/chat/ChatContext";
 import ChatList from "../features/chat/ChatsList";
 
-const SideBar = () => {
+const SideBar = ({ setShowAddGroup }) => {
   const [search, setSearch] = useState("");
   // const [chats, setChats] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
@@ -104,7 +104,7 @@ const SideBar = () => {
         </div>
       ) : (
         <div>
-          <ChatList />
+          <ChatList setShowAddGroup={setShowAddGroup} />
         </div>
       )}
     </div>
