@@ -3,7 +3,8 @@ const User = require("../model/userModel");
 const generateToken = require("../utils/generateToken");
 
 exports.getAllUser = asyncHandler(async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({ _id: { $ne: req.user._id } });
+
   res.status(200).json(users);
 });
 

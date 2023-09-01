@@ -12,7 +12,7 @@ const {
   updateUserProfile,
 } = require("../controller/userController");
 
-router.get("/getusers", getAllUser);
+router.get("/getusers", protect, getAllUser);
 
 router.get("/", protect, allUsers);
 router.post("/register", registerUser);

@@ -28,7 +28,7 @@ const ChatList = ({ setShowAddGroup }) => {
       <div className="flex justify-end">
         <button
           onClick={() => setShowAddGroup(true)}
-          className=" my-2 mr-2 border px-4 py-1"
+          className=" my-2 mr-2 border px-4 py-1 hover:bg-cyan-800"
         >
           + Group
         </button>
