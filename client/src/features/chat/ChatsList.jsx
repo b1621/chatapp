@@ -4,7 +4,7 @@ import { useAuth } from "../user/AuthContext";
 import { useChat } from "./ChatContext";
 import { useEffect } from "react";
 
-const ChatList = ({ setShowAddGroup }) => {
+const ChatList = ({ setShowAddGroup, fetchAgain }) => {
   const { chats, setChats, selectedChat, setSelectedChat } = useChat();
   const { user } = useAuth();
 
@@ -21,7 +21,10 @@ const ChatList = ({ setShowAddGroup }) => {
   // fetchChats();
   useEffect(() => {
     fetchChats();
-  }, []);
+  }, [fetchAgain]);
+
+  console.log("seleccted chat : ", selectedChat);
+  console.log("chats : ", chats);
   return (
     <div>
       <h2 className="my-1  text-center text-lg">chats list</h2>
@@ -41,7 +44,7 @@ const ChatList = ({ setShowAddGroup }) => {
               className={` flex cursor-pointer items-center space-x-3 bg-slate-700 px-2 py-2 hover:bg-slate-800 ${
                 selectedChat?._id === chat._id
                   ? " bg-cyan-800 hover:bg-cyan-900"
-                  : ""
+                  : " "
               }`}
               onClick={() => setSelectedChat(chat)}
             >

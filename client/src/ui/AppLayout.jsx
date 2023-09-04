@@ -11,11 +11,16 @@ const AppLayout = () => {
   // console.log("is Authenticated = ", isAuthenticated);
   const [showProfile, setShowProfile] = useState(false);
   const [showAddGroup, setShowAddGroup] = useState(false);
+  const [fetchAgain, setFetchAgain] = useState(false);
   return (
     <div>
       <div className="relative flex h-screen">
-        <SideBar setShowAddGroup={setShowAddGroup} />
-        <Main setShowProfile={setShowProfile} />
+        <SideBar setShowAddGroup={setShowAddGroup} fetchAgain={fetchAgain} />
+        <Main
+          setShowProfile={setShowProfile}
+          fetchAgain={fetchAgain}
+          setFetchAgain={setFetchAgain}
+        />
         {showProfile && <Profile setShowProfile={setShowProfile} />}
         {showAddGroup && <AddGroup setShowAddGroup={setShowAddGroup} />}
       </div>

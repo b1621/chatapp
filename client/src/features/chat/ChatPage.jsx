@@ -1,7 +1,7 @@
 import React from "react";
 import { useChat } from "./ChatContext";
 
-const ChatPage = () => {
+const ChatPage = ({ fetchAgain, setFetchAgain }) => {
   const { selectedChat } = useChat();
   return (
     <>
@@ -11,7 +11,9 @@ const ChatPage = () => {
           <p>{selectedChat._id}</p>
         </>
       ) : (
-        <div>Chat Not Selected !!</div>
+        <div className="flex h-screen flex-col justify-center  text-center">
+          <p className=" text-2xl">Chat Not Selected !!</p>
+        </div>
       )}
     </>
   );
